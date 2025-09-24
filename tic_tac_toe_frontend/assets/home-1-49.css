@@ -1,0 +1,356 @@
+/* Canvas respects 430x932 as per screen dimensions */
+
+/* Title "Foodgo" at x:-991,y:-978 within root whose origin maps to canvas top-left.
+   Normalize: In the provided JSON, the root frame's x,y is (-1010, -1006) for a 430x932 canvas.
+   To convert child absolute coords to canvas coords, add offsets +1010 to x and +1006 to y. */
+:root {
+  --offset-x: 1010px;
+  --offset-y: 1006px;
+}
+
+/* Helper to place elements using data coordinates if needed */
+.abs { position: absolute; }
+
+.foodgo {
+  left: calc(-991px + var(--offset-x));
+  top: calc(-978px + var(--offset-y));
+  width: 129px;
+  height: 61px;
+}
+
+/* Subtitle */
+.subtitle {
+  left: calc(-991px + var(--offset-x));
+  top: calc(-917px + var(--offset-y));
+  width: 238px;
+  height: 27px;
+}
+
+/* Mask group at x:-659,y:-978 (60x60); background rect and oversized image per JSON */
+.mask-group {
+  left: calc(-659px + var(--offset-x));
+  top: calc(-978px + var(--offset-y));
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  overflow: hidden;
+  border-radius: var(--radius-20);
+}
+.mask-group .mask-bg {
+  position: absolute;
+  left: 0; top: 0; width: 60px; height: 60px;
+}
+.mask-group .mask-image {
+  position: absolute;
+  left: calc(-688px + var(--offset-x) - (-659px + var(--offset-x)));
+  top: calc(-981px + var(--offset-y) - (-978px + var(--offset-y)));
+  width: 106px;
+  height: 73px;
+  object-fit: cover;
+}
+
+/* Group 3: search input (x:-991,y:-843 size 392x60) with inner 319x60 field + 60x60 settings */
+.group-3 {
+  left: calc(-991px + var(--offset-x));
+  top: calc(-843px + var(--offset-y));
+  width: 392px;
+  height: 60px;
+}
+.group-3 .search-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 319px;
+  height: 60px;
+  border-radius: var(--radius-20);
+}
+.group-3 .settings-wrapper {
+  position: absolute;
+  left: calc(392px - 60px);
+  top: 0;
+  width: 60px;
+  height: 60px;
+}
+.group-3 .settings-bg {
+  position: absolute;
+  left: 0; top: 0; width: 60px; height: 60px; border-radius: var(--radius-20);
+}
+.group-3 .settings-icon {
+  position: absolute;
+  left: calc(60px/2 - 12px);
+  top: calc(60px/2 - 12px);
+  width: 24px; height: 24px;
+}
+.group-3 .settings-icon .bar {
+  display: block;
+  width: 24px;
+  background: var(--color-ffffff);
+  border-radius: 1px;
+}
+.group-3 .settings-icon .bar1 { height: 6.9989876747px; margin-top: 0.625px; }
+.group-3 .settings-icon .bar2 { height: 6.9994945526px; margin-top: 1px; }
+.group-3 .settings-icon .bar3 { height: 6.9994812012px; margin-top: 1px; }
+
+.group-3 .search-wrapper {
+  position: absolute;
+  left: 20px;
+  top: 18px; /* center 24px icon and 21px text height within 60px */
+  height: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.group-3 .search-icon {
+  width: 24px; height: 24px;
+  background: var(--color-3c2f2f);
+  border-radius: 2px; /* placeholder for icon vector fill */
+}
+.group-3 .search-text {
+  height: 21px;
+}
+
+/* Filter row at x:-1011,y:-742, size 412x50 (contains chips laid horizontally). We'll render four chips based on following child dims. */
+.filter-row {
+  left: calc(-1011px + var(--offset-x));
+  top: calc(-742px + var(--offset-y));
+  width: 412px;
+  height: 50px;
+  position: absolute;
+}
+.chip {
+  position: absolute;
+  height: 50px;
+}
+.chip .chip-bg { position: absolute; left: 0; top: 0; height: 50px; border-radius: var(--radius-20); }
+.chip .chip-text { position: absolute; }
+
+.chip-all { left: calc(-991px + var(--offset-x) - (-1011px + var(--offset-x))); top: 0; width: 75px; }
+.chip-all .chip-bg { width: 75px; }
+.chip-all .chip-text { left: calc(75px/2 - 10px); top: 15.5px; width: 20px; height: 19px; color: var(--color-f5f5f5); }
+
+.chip-combos { left: calc(-902px + var(--offset-x) - (-1011px + var(--offset-x))); top: 0; width: 120px; }
+.chip-combos .chip-bg { width: 120px; }
+.chip-combos .chip-text { left: 28px; top: 15.5px; width: 64px; height: 19px; color: var(--color-6a6a6a); }
+
+.chip-sliders { left: calc(-768px + var(--offset-x) - (-1011px + var(--offset-x))); top: 0; width: 120px; }
+.chip-sliders .chip-bg { width: 120px; }
+.chip-sliders .chip-text { left: 33px; top: 16px; width: 53px; height: 19px; color: var(--color-6a6a6a); }
+
+.chip-classic { left: calc(-634px + var(--offset-x) - (-1011px + var(--offset-x))); top: 0; width: 110px; }
+.chip-classic .chip-bg { width: 110px; }
+.chip-classic .chip-text { left: 27px; top: 15.5px; width: 56px; height: 19px; color: var(--color-6a6a6a); }
+
+/* Cards group at x:-991,y:-651 size 392x481; using absolute positions per card groups */
+.card { position: absolute; width: 185px; height: 225px; }
+.card .card-bg { position: absolute; left: 0; top: 0; width: 185px; height: 225px; border-radius: var(--radius-20); }
+.card .card-image { position: absolute; object-fit: contain; }
+.card .card-title { position: absolute; }
+.card .card-rating { position: absolute; display: flex; align-items: center; gap: 5px; }
+.card .star { width: 16px; height: 16px; background: var(--color-ff9633); border-radius: 3px; display: inline-block; }
+.card .rate-text { display: inline-block; }
+.card .shadow-ellipse { position: absolute; background: var(--color-000000); opacity: 1; border-radius: 9999px; filter: blur(2px); }
+
+/* Card 1 (Group 10) at x:-991,y:-651 */
+.card-1 {
+  left: calc(-991px + var(--offset-x));
+  top: calc(-651px + var(--offset-y));
+}
+.card-1 .card-image {
+  left: calc(-959px + var(--offset-x) - (-991px + var(--offset-x)));
+  top: calc(-646px + var(--offset-y) - (-651px + var(--offset-y)));
+  width: 120px; height: 121.7578125px;
+}
+.card-1 .card-title {
+  left: calc(-980px + var(--offset-x) - (-991px + var(--offset-x)));
+  top: calc(-515px + var(--offset-y) - (-651px + var(--offset-y)));
+  width: 117px; height: 44px; color: var(--color-3c2f2f);
+}
+.card-1 .card-rating {
+  left: calc(-980px + var(--offset-x) - (-991px + var(--offset-x)));
+  top: calc(-462px + var(--offset-y) - (-651px + var(--offset-y)));
+  width: 44px; height: 22px;
+}
+.card-1 .ellipse1 {
+  left: calc(-944px + var(--offset-x) - (-991px + var(--offset-x)));
+  top: calc(-542px + var(--offset-y) - (-651px + var(--offset-y)));
+  width: 91px; height: 11px; border-radius: 9999px; background: var(--color-000000);
+}
+.card-1 .heart-1 {
+  position: absolute; left: calc(-841px + var(--offset-x) - (-991px + var(--offset-x)));
+  top: calc(-465px + var(--offset-y) - (-651px + var(--offset-y)));
+  width: 24px; height: 24px; background: var(--color-3c2f2f); border-radius: 6px;
+}
+
+/* Card 2 (Group 11) at x:-784,y:-651 */
+.card-2 {
+  left: calc(-784px + var(--offset-x));
+  top: calc(-651px + var(--offset-y));
+}
+.card-2 .card-image {
+  left: calc(-752px + var(--offset-x) - (-784px + var(--offset-x)));
+  top: calc(-640px + var(--offset-y) - (-651px + var(--offset-y)));
+  width: 120px; height: 120px;
+}
+.card-2 .card-title {
+  left: calc(-773px + var(--offset-x) - (-784px + var(--offset-x)));
+  top: calc(-515px + var(--offset-y) - (-651px + var(--offset-y)));
+  width: 117px; height: 44px; color: var(--color-3c2f2f);
+}
+.card-2 .card-rating {
+  left: calc(-773px + var(--offset-x) - (-784px + var(--offset-x)));
+  top: calc(-462px + var(--offset-y) - (-651px + var(--offset-y)));
+  width: 44px; height: 22px;
+}
+.card-2 .ellipse2 {
+  left: calc(-737px + var(--offset-x) - (-784px + var(--offset-x)));
+  top: calc(-541px + var(--offset-y) - (-651px + var(--offset-y)));
+  width: 91px; height: 11px; border-radius: 9999px; background: var(--color-000000);
+}
+.card-2 .heart-2 {
+  position: absolute; left: calc(-634px + var(--offset-x) - (-784px + var(--offset-x)));
+  top: calc(-465px + var(--offset-y) - (-651px + var(--offset-y)));
+  width: 24px; height: 24px; background: var(--color-3c2f2f); border-radius: 6px;
+}
+
+/* Card 3 (Group 12) at x:-991,y:-395 */
+.card-3 {
+  left: calc(-991px + var(--offset-x));
+  top: calc(-395px + var(--offset-y));
+}
+.card-3 .card-image {
+  left: calc(-971px + var(--offset-x) - (-991px + var(--offset-x)));
+  top: calc(-395px + var(--offset-y) - (-395px + var(--offset-y)));
+  width: 150px; height: 137.700012207px;
+}
+.card-3 .card-title {
+  left: calc(-980px + var(--offset-x) - (-991px + var(--offset-x)));
+  top: calc(-259px + var(--offset-y) - (-395px + var(--offset-y)));
+  width: 117px; height: 44px; color: var(--color-3c2f2f);
+}
+.card-3 .card-rating {
+  left: calc(-980px + var(--offset-x) - (-991px + var(--offset-x)));
+  top: calc(-206px + var(--offset-y) - (-395px + var(--offset-y)));
+  width: 44px; height: 22px;
+}
+.card-3 .ellipse3 {
+  left: calc(-951px + var(--offset-x) - (-991px + var(--offset-x)));
+  top: calc(-287.760925293px + var(--offset-y) - (-395px + var(--offset-y)));
+  width: 110px; height: 15.7609148026px; border-radius: 9999px; background: var(--color-000000);
+}
+.card-3 .heart-3 {
+  position: absolute; left: calc(-841px + var(--offset-x) - (-991px + var(--offset-x)));
+  top: calc(-209px + var(--offset-y) - (-395px + var(--offset-y)));
+  width: 24px; height: 24px; background: var(--color-3c2f2f); border-radius: 6px;
+}
+
+/* Card 4 (Group 13) at x:-784,y:-395 */
+.card-4 {
+  left: calc(-784px + var(--offset-x));
+  top: calc(-395px + var(--offset-y));
+}
+.card-4 .card-image {
+  left: calc(-754px + var(--offset-x) - (-784px + var(--offset-x)));
+  top: calc(-370px + var(--offset-y) - (-395px + var(--offset-y)));
+  width: 145px; height: 100.59375px;
+}
+.card-4 .card-title {
+  left: calc(-773px + var(--offset-x) - (-784px + var(--offset-x)));
+  top: calc(-259px + var(--offset-y) - (-395px + var(--offset-y)));
+  width: 158px; height: 44px; color: var(--color-3c2f2f);
+}
+.card-4 .card-rating {
+  left: calc(-773px + var(--offset-x) - (-784px + var(--offset-x)));
+  top: calc(-206px + var(--offset-y) - (-395px + var(--offset-y)));
+  width: 44px; height: 22px;
+}
+.card-4 .ellipse4 {
+  left: calc(-743.5px + var(--offset-x) - (-784px + var(--offset-x)));
+  top: calc(-285.008026123px + var(--offset-y) - (-395px + var(--offset-y)));
+  width: 112px; height: 11px; border-radius: 9999px; background: var(--color-000000);
+}
+.card-4 .ellipse-2-decoration {
+  position: absolute;
+  left: calc(-634.1794433594px + var(--offset-x) - (-784px + var(--offset-x)));
+  top: calc(-294.5px + var(--offset-y) - (-395px + var(--offset-y)));
+  width: 26.6794128418px; height: 27px; background: var(--color-ffffff);
+  border-radius: 50%;
+}
+
+/* Bottom bar group 16 at x:-1029,y:-150 size 456x90 + cutout ellipse group 15 at x:-907,y:-150 (two 82x82 circles) */
+.bottom-bar {
+  left: calc(-1029px + var(--offset-x));
+  top: calc(-150px + var(--offset-y));
+  width: 456px;
+  height: 90px;
+  position: absolute;
+}
+.bottom-bar .bottom-bg {
+  position: absolute; left: 0; top: 0; width: 456px; height: 90px; background: var(--color-ef2a39);
+}
+.bottom-bar .bottom-cutout {
+  position: absolute; left: calc(-836px + var(--offset-x) - (-1029px + var(--offset-x)));
+  top: calc(-191px + var(--offset-y) - (-150px + var(--offset-y)));
+  width: 82px; height: 82px; background: var(--color-d9d9d9); border-radius: 50%;
+}
+.bottom-bar .bottom-circles {
+  position: absolute;
+  left: calc(-907px + var(--offset-x) - (-1029px + var(--offset-x)));
+  top: 0;
+  width: 224px; height: 82px;
+}
+.bottom-bar .bottom-circles .circle:nth-child(1) {
+  position: absolute; left: 0; top: 0; width: 82px; height: 82px; border-radius: 50%;
+}
+.bottom-bar .bottom-circles .circle:nth-child(2) {
+  position: absolute; left: calc(224px - 82px); top: 0; width: 82px; height: 82px; border-radius: 50%;
+}
+
+/* Bottom icons (home/user/comment/heart-sr and dot) mapped to positions */
+.icon-home {
+  left: calc(-979px + var(--offset-x));
+  top: calc(-133px + var(--offset-y));
+  width: 24px; height: 24px; position: absolute; background: var(--color-ffffff); border-radius: 4px;
+}
+.icon-user {
+  left: calc(-897px + var(--offset-x));
+  top: calc(-133px + var(--offset-y));
+  width: 24px; height: 24px; position: absolute; background: var(--color-ffffff); border-radius: 4px;
+}
+.icon-comment {
+  left: calc(-716px + var(--offset-x));
+  top: calc(-133px + var(--offset-y));
+  width: 24px; height: 24px; position: absolute; background: var(--color-ffffff); border-radius: 4px;
+}
+.dot {
+  left: calc(-969px + var(--offset-x));
+  top: calc(-101px + var(--offset-y));
+  width: 4px; height: 4px; position: absolute; background: var(--color-ffffff); border-radius: 50%;
+}
+
+/* Heart solid icon at x:-634,y:-133 (fi_sr_heart) positioned as simple square for placeholder */
+.icon-heart-solid {
+  left: calc(-634px + var(--offset-x));
+  top: calc(-133px + var(--offset-y));
+  width: 24px; height: 24px; position: absolute; background: var(--color-ffffff); border-radius: 4px;
+}
+
+/* Floating action button group 18 at x:-831,y:-198 size 72x72 with plus lines */
+.fab {
+  left: calc(-831px + var(--offset-x));
+  top: calc(-198px + var(--offset-y));
+  width: 72px; height: 72px; position: absolute;
+}
+.fab-ellipse {
+  position: absolute; left: 0; top: 0; width: 72px; height: 72px; border-radius: 50%;
+}
+.fab-plus {
+  position: absolute; left: calc(72px/2 - 8px); top: calc(72px/2 - 8px); width: 16px; height: 16px;
+}
+.fab-plus .h-line {
+  position: absolute; left: 0; top: 8px; width: 16px; height: 0; border-top: 5px solid var(--color-ffffff);
+  border-radius: 2px;
+}
+.fab-plus .v-line {
+  position: absolute; left: 8px; top: 0; width: 0; height: 16px; border-left: 5px solid var(--color-ffffff);
+  border-radius: 2px;
+}
